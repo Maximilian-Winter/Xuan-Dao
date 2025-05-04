@@ -1,5 +1,9 @@
 This repository contains my exploration of the Xuán Dào (玄道) - The Dao of Mysteries.
 
+
+![Xuán Dào (玄道) Seal](XuanDaoSeal.png)
+
+
 When the Dao is lost, there arises virtue. When virtue is lost, there arises humanity. When humanity is lost, there arises righteousness. When righteousness is lost, there arises ritual propriety.
 ---
 The Dao never does anything,
