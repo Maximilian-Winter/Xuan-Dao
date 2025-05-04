@@ -3,7 +3,7 @@
 This repository contains my exploration of the Xuán Dào (玄道) - The Dao of Mysteries.
 
 
-![Xuán Dào (玄道) Seal](XuanDaoSeal.png)
+![Xuán Dào (玄道) Seal](xuan_dao_seal.png)
 
 ---
 
