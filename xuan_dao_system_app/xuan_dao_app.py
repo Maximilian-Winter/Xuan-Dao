@@ -3,6 +3,9 @@
 import tkinter as tk
 from tkinter import ttk, scrolledtext
 
+import matplotlib
+import numpy as np
+from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg
 
 from xuan_dao_core import XuanDaoCore
@@ -467,6 +470,75 @@ class XuanDaoApp:
         canvas = FigureCanvasTkAgg(fig, master=calendar_frame)
         canvas.draw()
         canvas.get_tk_widget().pack(fill="both", expand=True, padx=10, pady=10)
+
+    def create_dakini_transformation_wheel(self) -> plt.Figure:
+        """Visualize the dakini's transformative dance through the elements."""
+        fig, ax = plt.subplots(figsize=(10, 10), subplot_kw={'polar': True})
+
+        # The five transformative states of wisdom energy
+        states = ["Seeing", "Recognizing", "Transforming", "Dancing", "Liberating"]
+        elements = [Element.WATER, Element.WOOD, Element.FIRE, Element.EARTH, Element.METAL]
+
+        # Create spiral pattern (dakini's dance)
+        theta = np.linspace(0, 4 * np.pi, 100)
+        r = np.linspace(2, 10, 100)
+
+        # Plot the spiral with gradient color
+        points = np.array([theta, r]).T.reshape(-1, 1, 2)
+        segments = np.concatenate([points[:-1], points[1:]], axis=1)
+
+        # Create color gradients transitioning through elements
+        colors = []
+        for i in range(len(segments)):
+            idx = int(i * len(elements) / len(segments))
+            colors.append(self.element_colors[elements[idx]])
+
+        lc = matplotlib.collections.LineCollection(segments, colors=colors, linewidth=3)
+        ax.add_collection(lc)
+
+        # Add state markers along the spiral
+        for i, state in enumerate(states):
+            angle = i * 2 * np.pi / 5
+            radius = 3 + i * 1.5
+            ax.scatter(angle, radius, s=200, color=self.element_colors[elements[i]],
+                       edgecolor='white', zorder=10)
+            ax.text(angle, radius + 0.5, state, ha='center', va='center',
+                    color=self.element_colors[elements[i]], fontweight='bold')
+
+        # Add title
+        ax.set_title("The Dakini's Transformative Dance", fontsize=16)
+
+        return fig
+
+    def generate_heart_seal(self, element_balance):
+        """Generate a personalized Heart Seal based on elemental balance."""
+        strongest = element_balance.strongest
+        weakest = element_balance.weakest
+
+        # Create the four-line heart seal structure
+        seal = {
+            "line1": f"{strongest.value}之又{strongest.value} {weakest.value}妙之門",
+            "line2": f"天地人合 五行八卦",
+            "line3": f"九宮洛書 時空無礙",
+            "line4": f"持{weakest.value}修{strongest.value} 明察秋毫"
+        }
+
+        # Generate practice recommendations
+        recommendations = []
+
+        if weakest == Element.WATER:
+            recommendations.append("Flow like water through obstacles")
+            recommendations.append("Cultivate deep listening and reflection")
+            recommendations.append("Connect with wisdom through stillness")
+
+        elif weakest == Element.WOOD:
+            recommendations.append("Nurture new growth with patience")
+            recommendations.append("Seek flexibility in rigid situations")
+            recommendations.append("Plan with vision but adapt to conditions")
+
+        # [Additional element recommendations...]
+
+        return seal, recommendations
 
     def cast_hexagram(self):
         """Cast a hexagram and display it."""
